@@ -33,6 +33,7 @@ or if multiple things are being optimized, `x_scale` can be a list of dict, one 
 - Changes the import paths for ``desc.external`` to require reference to the sub-modules.
 - Adds a differentiable utility for finding constant offset toroidal surfaces inside of optimizations. See [PR](https://github.com/PlasmaControl/DESC/pull/2016) for more details.
 - Add support for Python 3.14
+- Adds ``ITGProxy`` and ``NNITGProxy`` objective classes for ITG turbulence optimization based on Landreman et al. 2025, with GX geometric feature compute functions and flux tube geometry utilities.
 
 Bug Fixes
 
