@@ -1,6 +1,10 @@
 Changelog
 =========
 
+New Features
+
+- Adds ``desc.external.t3d`` for explicitly configured AI_GX transport evaluation returning ion-temperature profiles, native solver evidence and source/model provenance.
+
 Bug Fixes
 
 - Fixes incorrect units in the documentation of some curvature variables.

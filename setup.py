@@ -59,6 +59,9 @@ setup(
     packages=find_packages(exclude=["docs", "tests", "local", "report"]),
     include_package_data=True,
     install_requires=requirements,
+    extras_require={
+        "t3d": ["netCDF4>=1.6", "tomli>=2; python_version < '3.11'"],
+    },
     python_requires=">=3.10",
     entry_points={"console_scripts": ["desc=desc.__main__:main"]},
     project_urls={
