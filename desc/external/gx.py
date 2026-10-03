@@ -314,13 +314,19 @@ def _interpolate_to_uniform_grid(theta_pest, gradpar, geo_arrays, nzgrid):
     # Integrate arc-length: dl = d(theta_pest) / |gradpar|
     arc_length = cumulative_trapezoid(1.0 / jnp.abs(gradpar), x=theta_pest, initial=0.0)
 
-    # Shift so center (index nzgrid) is at 0, then rescale to [-pi, pi]
-    arc_length = arc_length - arc_length[nzgrid]
+    # Affinely map the full arc-length interval to [-pi, pi]. Centering the
+    # interval on ``arc_length[nzgrid]`` does not, in general, map both endpoints
+    # to the interpolation domain and can therefore produce NaNs at one endpoint.
     L_total = arc_length[-1] - arc_length[0]
     gradpar_uniform_val = 2.0 * jnp.pi / L_total
-    arc_length_scaled = arc_length * (2.0 * jnp.pi / L_total)
-
     uniform_z = jnp.linspace(-jnp.pi, jnp.pi, nl)
+    arc_length_scaled = (
+        (arc_length - arc_length[0]) * (2.0 * jnp.pi / L_total) - jnp.pi
+    )
+    # Avoid roundoff putting an interpolation query infinitesimally outside the
+    # source domain. Pinning is preferable to extrapolating geometry coefficients.
+    arc_length_scaled = arc_length_scaled.at[0].set(uniform_z[0])
+    arc_length_scaled = arc_length_scaled.at[-1].set(uniform_z[-1])
 
     result = {
         k: interp1d(uniform_z, arc_length_scaled, v, method="cubic")

@@ -1,6 +1,33 @@
 """Tests for the GX external objective helpers."""
 
-from desc.external.gx import _run_gx, _write_gx_input
+import numpy as np
+
+from desc.backend import jnp
+from desc.external.gx import (
+    _interpolate_to_uniform_grid,
+    _run_gx,
+    _write_gx_input,
+)
+
+
+def test_uniform_grid_interpolation_maps_both_endpoints():
+    """Asymmetric arc lengths must not extrapolate at either GX grid endpoint."""
+    nzgrid = 16
+    theta_pest = jnp.linspace(-jnp.pi, jnp.pi, 2 * nzgrid + 1)
+    # The odd component makes the arc length on either side of theta=0 unequal.
+    gradpar = 1.0 + 0.2 * jnp.sin(theta_pest)
+    source = jnp.cos(theta_pest)
+
+    result = _interpolate_to_uniform_grid(
+        theta_pest, gradpar, {"signal": source}, nzgrid
+    )
+
+    signal = np.asarray(result["signal"])
+    z = np.asarray(result["z"])
+    source = np.asarray(source)
+    assert np.isfinite(signal).all()
+    np.testing.assert_array_equal(z[[0, -1]], np.array([-np.pi, np.pi]))
+    np.testing.assert_allclose(signal[[0, -1]], source[[0, -1]])
 
 
 def test_write_gx_input_forces_eik_geometry(tmp_path):
