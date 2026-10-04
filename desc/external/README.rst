@@ -14,3 +14,8 @@ of TERPSICHORE compiled on Perlmutter in January of 2025.
 
 `paraview.py` was last tested on November 24, 2025 with DESC v0.16.0, Paraview v5.13.3
 and pyvista v0.46.4.
+
+``t3d.py`` provides an explicitly configured AI_GX transport evaluator returning
+ion-temperature radial profiles with native units and verified provenance.
+Templates, trained model assets and scheduler/cadence hooks are supplied by the
+application. See ``docs/external_t3d.rst`` for the API and native validation scope.

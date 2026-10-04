@@ -394,3 +394,11 @@ VMEC and Other Codes
 
     desc.vmec.VMECIO
     desc.vmec_utils.make_boozmn_output
+
+External transport evaluation
+-----------------------------
+
+.. toctree::
+   :maxdepth: 1
+
+   external_t3d
