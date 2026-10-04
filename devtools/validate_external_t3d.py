@@ -23,8 +23,12 @@ def main():
     from desc import set_device
 
     set_device("cpu")
-    from desc.external._t3d.adapter import atomic_json
-    from desc.external.t3d import T3DAdapter, T3DConfig, read_ion_temperature
+    from desc.external.t3d import (
+        T3DAdapter,
+        T3DConfig,
+        atomic_json,
+        read_ion_temperature,
+    )
     from desc.io import load
 
     eq = load(args.equilibrium)

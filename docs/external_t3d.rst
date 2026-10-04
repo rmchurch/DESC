@@ -8,6 +8,16 @@ It returns one ``IonTemperatureProfile`` per equilibrium. The full equilibrium
 is saved as native DESC HDF5 and handed to T3D. It defines no scalar objective,
 derivative, optimizer, core extrapolation or equilibrium pressure feedback.
 
+Implementation
+--------------
+
+``desc/external/t3d.py`` contains configuration, equilibrium handoff, execution,
+cache/failure handling, native output parsing and the public profile API.
+``desc/external/_t3d_worker.py`` is only the subprocess entry point for the
+caller's external Python environment; no private implementation package is used.
+Input validation and asset hashing are shared, and archive profile data and
+solver metadata are read in one NetCDF context.
+
 Configuration and dependencies
 ------------------------------
 
@@ -96,7 +106,9 @@ Archived output is read without worker execution or a current runtime probe::
 The reader verifies archived hashes and native output against its immutable
 input/result. It preserves the historical source/model provenance; current
 installation files need not equal that old execution. Live adapter cache lookup
-still requires the current configuration/source identity.
+still requires the current configuration/source identity. Implementation changes
+therefore create a new live run identity; existing archived results remain
+readable without rerunning transport.
 
 Integration boundaries and validation
 ------------------------------------

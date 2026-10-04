@@ -8,8 +8,13 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from desc.external._t3d.adapter import _set_key, equilibrium_identity, load_toml
-from desc.external.t3d import T3DAdapter, T3DConfig
+from desc.external.t3d import (
+    T3DAdapter,
+    T3DConfig,
+    _set_key,
+    equilibrium_identity,
+    load_toml,
+)
 
 pytestmark = pytest.mark.unit
 

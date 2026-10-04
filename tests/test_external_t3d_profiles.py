@@ -9,12 +9,13 @@ import numpy as np
 import pytest
 from netCDF4 import Dataset
 
-from desc.external._t3d.adapter import atomic_json, file_hash
-from desc.external._t3d.worker import parse_output
 from desc.external.t3d import (
     T3DAdapter,
     T3DEvaluationError,
+    atomic_json,
     evaluate_t3d,
+    file_hash,
+    parse_output,
     read_ion_temperature,
     t3d,
 )

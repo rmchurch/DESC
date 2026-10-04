@@ -9,14 +9,14 @@ import numpy as np
 import pytest
 from netCDF4 import Dataset
 
-from desc.external._t3d.adapter import atomic_json
-from desc.external._t3d.outcomes import (
+from desc.external.t3d import (
+    T3DAdapter,
+    atomic_json,
     evolution_outcome,
+    parse_output,
     validate_evolution_result,
     validate_gpu_preflight,
 )
-from desc.external._t3d.worker import parse_output
-from desc.external.t3d import T3DAdapter
 
 from .test_external_t3d import Eq
 from .test_external_t3d import setup_adapter as _setup_adapter
@@ -306,7 +306,7 @@ def test_worker_selects_desc_gpu_before_runtime_backend_import(monkeypatch):
     import sys
     from types import SimpleNamespace
 
-    from desc.external._t3d import worker
+    from desc.external import _t3d_worker as worker
 
     selected = []
     monkeypatch.setitem(
